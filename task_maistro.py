@@ -12,6 +12,7 @@ from langchain_core.messages import merge_message_runs
 from langchain_core.messages import SystemMessage, HumanMessage
 
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph, MessagesState, START, END
@@ -138,7 +139,7 @@ class UpdateMemory(TypedDict):
     update_type: Literal['user', 'todo', 'instructions']
 
 # Initialize the model
-model = ChatOpenAI(model="gpt-4o", temperature=0)
+model = ChatGroq(model="llama-3.1-8b-instant", temperature=0)
 
 ## Create the Trustcall extractors for updating the user profile and ToDo list
 profile_extractor = create_extractor(
@@ -188,7 +189,7 @@ Here are your instructions for reasoning about the user's messages:
 
 4. Err on the side of updating the todo list. No need to ask for explicit permission.
 
-5. Respond naturally to user user after a tool call was made to save memories, or if no tool call was made."""
+5. Respond naturally to the user after a tool call was made to save memories, or if no tool call was made."""
 
 # Trustcall instruction
 TRUSTCALL_INSTRUCTION = """Reflect on following interaction. 
